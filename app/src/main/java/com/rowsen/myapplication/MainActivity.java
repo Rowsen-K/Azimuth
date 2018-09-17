@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
                //     state.setText("当前为实时位置");
                     compass.getSensorValue().c(cali.cal(loc.getLongitude(), loc.getLatitude()).floatValue());
                     compass.draw(canvas);
+                    compass.invalidate();
                 }
 
                 @Override
@@ -109,7 +110,8 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
          //   param2.setText(String.format("%.2f",Math.toDegrees(cali.C46)));
         //    param3.setText(String.format("%.2f",Math.toDegrees(cali.C48)));
             compass.getSensorValue().c(cali.cal(location.getLongitude(), location.getLatitude()).floatValue());
-            compass.draw(canvas);
+            compass.invalidate(); compass.draw(canvas);
+
         }
         handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -122,7 +124,8 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
                  //   param2.setText(String.format("%.2f", Math.toDegrees(cali.C46)));
                  //   param3.setText(String.format("%.2f", Math.toDegrees(cali.C48)));
                     compass.getSensorValue().c(cali.cal(location.getLongitude(), location.getLatitude()).floatValue());
-                    compass.draw(canvas);
+                    compass.invalidate();compass.draw(canvas);
+
                     System.out.println(cali.cal(location.getLongitude(), location.getLatitude()));
                     handler.postDelayed(this, 2000);
                 }
