@@ -175,6 +175,7 @@ public class a {
         this.B = true;
     }
 
+    //绘制圆盘及外圈
     private void b(Canvas paramCanvas) {
         float f1 = a(430.0F);
         paramCanvas.drawCircle(this.x.x, this.x.y, f1, this.e);
@@ -216,8 +217,8 @@ public class a {
         if (!this.l) {
             f1 = -f1;
         }
-        localPath.addArc((RectF) localObject, -90.0F, f1);
-        paramCanvas.drawPath(this.i, this.c);
+      //  localPath.addArc((RectF) localObject, -90.0F, f1);
+      //  paramCanvas.drawPath(this.i, this.c);
     }
 
     private void b(Canvas paramCanvas, float paramFloat1, String paramString, float paramFloat2, Paint paramPaint) {
@@ -283,12 +284,12 @@ public class a {
             this.F.setStyle(Paint.Style.STROKE);
             this.F.setAntiAlias(true);
             this.d.setAntiAlias(true);
-            this.F.setStrokeWidth(a(25.0F));
+            this.F.setStrokeWidth(a(0.0F));
             this.F.setColor(this.n);
             RectF localRectF = new RectF(this.x.x - f1, this.x.y - f1, this.x.x + f1, this.x.y + f1);
             this.G.reset();
             //最外的圆弧指示magfield
-            this.G.addArc(localRectF, 310.0F, 100.0F);
+          //  this.G.addArc(localRectF, 00.0F, 360.0F);
             f1 = Math.min(1.0F, this.j.a() / ' ') * 100;
             this.H.reset();
             this.H.addArc(localRectF, 410 - f1, f1);
@@ -296,10 +297,14 @@ public class a {
             this.f.setTextSize(a(30.0F));
             this.E = this.j.a();
         }
-        paramCanvas.drawPath(this.G, this.F);
+       // paramCanvas.drawPath(this.G, this.F);
         paramCanvas.drawPath(this.H, this.d);
-        a(paramCanvas, 303.0F, String.format(Locale.US, "%dμT", new Object[]{Integer.valueOf((int) this.j.a())}), 445.0F, this.h);
-        a(paramCanvas, 60.0F, "mag.field", 445.0F, this.f);
+        this.h.setColor(this.s);
+        a(paramCanvas, j.b(), String.format(Locale.US, "Rowsen", new Object[]{Integer.valueOf((int) this.j.a())}), 445.0F, this.h);
+        this.h.setColor(this.o);
+        this.f.setColor(this.o);
+        a(paramCanvas, 90.0F, "Design By Rowsen", 445.0F, this.f);
+        this.f.setColor(this.p);
     }
 
     //正北指针标记
@@ -345,7 +350,7 @@ public class a {
     }
 
 
-    //主表盘的颜色,中心圈和外圈
+    //圆盘中心数据展示
     private void e(Canvas paramCanvas) {
         this.c.reset();
         this.c.setAntiAlias(true);
@@ -359,19 +364,16 @@ public class a {
         } else {
             f1 = (this.j.b() + 720.0F) % 360.0F;
         }
-        System.out.println("=====================f1:"+f1);
         StringBuilder localObject = new StringBuilder();
          localObject.append(com.rowsen.myapplication.d.a(f1));
         localObject.append(" ");
         localObject.append(String.valueOf(f1));
         localObject.append("°");
-        System.out.println("======================数据："+localObject);
         Rect localRect = new Rect();
         this.g.getTextBounds(localObject.toString(), 0, localObject.length(), localRect);
         float f3 = this.x.y;
         float f2 = localRect.height() / 2.0F;
         paramCanvas.drawText(localObject.toString(), this.x.x - this.g.measureText(localObject.toString()) / 2.0F, f3 + f2, this.g);
-       // paramCanvas.drawText(localObject.toString(), this.x.x - this.g.measureText(localObject.toString()) / 2.0F, this.x.y, this.g);
     }
 
     //magfield\东北等三个偏角方向文字

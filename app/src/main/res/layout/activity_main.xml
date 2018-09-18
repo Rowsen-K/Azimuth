@@ -9,7 +9,8 @@
             android:id="@+id/relativeLayout1"
             android:layout_width="fill_parent"
             android:layout_height="0.0dip"
-            android:layout_weight="60.0">
+            android:layout_weight="60.0"
+            android:background="@color/info">
             <RelativeLayout
                 android:id="@+id/rl_cp"
                 android:layout_width="wrap_content"
@@ -81,7 +82,8 @@
                 android:layout_marginTop="15.0dip"
                 android:layout_marginRight="10.0dip"
                 android:background="@null"
-                android:src="@drawable/ic_menu_camera" />
+                android:src="@drawable/ic_menu_camera"
+                android:visibility="gone"/>
             <ImageButton
                 android:id="@+id/mapButton"
                 android:layout_width="wrap_content"
@@ -91,7 +93,8 @@
                 android:layout_marginLeft="10.0dip"
                 android:layout_marginTop="15.0dip"
                 android:background="@null"
-                android:src="@drawable/ic_menu_mapmode" />
+                android:src="@drawable/ic_menu_mapmode"
+                android:visibility="gone"/>
             <ImageButton
                 android:id="@+id/skinButton"
                 android:layout_width="wrap_content"
@@ -101,7 +104,8 @@
                 android:layout_marginLeft="10.0dip"
                 android:layout_marginBottom="15.0dip"
                 android:background="@null"
-                android:src="@drawable/ic_skin" />
+                android:src="@drawable/ic_skin"
+                android:visibility="gone"/>
             <ImageButton
                 android:id="@+id/northButton"
                 android:layout_width="wrap_content"
@@ -111,7 +115,8 @@
                 android:layout_marginRight="10.0dip"
                 android:layout_marginBottom="15.0dip"
                 android:background="@null"
-                android:src="@drawable/ic_north" />
+                android:src="@drawable/ic_north"
+                android:visibility="gone"/>
         </com.rowsen.myapplication.SizeNotiRelativeLayout>
         <LinearLayout
             android:id="@+id/compass_below_layout"
@@ -133,11 +138,12 @@
                     android:layout_width="0.0dip"
                     android:layout_height="34.0dip"
                     android:layout_weight="20"
-                    android:background="@color/green"
+                    android:background="@color/c"
                     android:gravity="center"
+                    android:layout_marginLeft="5dp"
                     android:paddingTop="2.0dip"
                     android:paddingBottom="2.0dip"
-                    android:text="计算"
+                    android:text="待开发"
                     android:textColor="@color/colorAccent"
                     android:textSize="18sp" />
                 <LinearLayout
@@ -153,7 +159,7 @@
                         android:id="@+id/azimuth_type_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="真北"
+                        android:text="磁北"
                         android:textColor="@color/colorAccent"
                         android:textSize="18sp" />
                     <LinearLayout
@@ -178,7 +184,7 @@
                             android:ellipsize="none"
                             android:includeFontPadding="false"
                             android:singleLine="true"
-                            android:text="北"
+                            android:text="°"
                             android:textColor="@color/colorAccent"
                             android:textSize="20sp" />
                     </LinearLayout>
@@ -188,11 +194,12 @@
                     android:layout_width="0.0dip"
                     android:layout_height="34.0dip"
                     android:layout_weight="20"
-                    android:background="@color/green"
+                    android:background="@color/c"
                     android:gravity="center"
                     android:paddingTop="2.0dip"
                     android:paddingBottom="2.0dip"
-                    android:text="锁定"
+                    android:layout_marginRight="5dp"
+                    android:text="关于"
                     android:textColor="@color/colorAccent"
                     android:textSize="18sp" />
             </LinearLayout>
@@ -201,7 +208,8 @@
                    android:layout_height="wrap_content"
                    android:gravity="center"
                    android:orientation="vertical"
-                   android:weightSum="100.0">
+                   android:weightSum="100.0"
+                android:background="@color/info">
                    <View
                        android:id="@+id/info_line1"
                        android:layout_width="fill_parent"
@@ -494,7 +502,8 @@
        <LinearLayout
            android:layout_width="match_parent"
            android:layout_height="0dp"
-           android:layout_weight="4">
+           android:layout_weight="4"
+           android:background="@color/state">
           <ImageView
               android:id="@+id/mark"
               android:layout_width="wrap_content"
