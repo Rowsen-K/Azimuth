@@ -359,17 +359,19 @@ public class a {
         } else {
             f1 = (this.j.b() + 720.0F) % 360.0F;
         }
-        Object localObject = new StringBuilder();
-        ((StringBuilder) localObject).append(com.rowsen.myapplication.d.a(f1));
-        ((StringBuilder) localObject).append(" ");
-        ((StringBuilder) localObject).append(String.valueOf(Math.round(f1)));
-        ((StringBuilder) localObject).append("°");
-        localObject = ((StringBuilder) localObject).toString();
+        System.out.println("=====================f1:"+f1);
+        StringBuilder localObject = new StringBuilder();
+         localObject.append(com.rowsen.myapplication.d.a(f1));
+        localObject.append(" ");
+        localObject.append(String.valueOf(f1));
+        localObject.append("°");
+        System.out.println("======================数据："+localObject);
         Rect localRect = new Rect();
-        this.g.getTextBounds((String) localObject, 0, ((String) localObject).length(), localRect);
+        this.g.getTextBounds(localObject.toString(), 0, localObject.length(), localRect);
         float f3 = this.x.y;
         float f2 = localRect.height() / 2.0F;
-        paramCanvas.drawText((String) localObject, this.x.x - this.g.measureText((String) localObject) / 2.0F, f3 + f2, this.g);
+        paramCanvas.drawText(localObject.toString(), this.x.x - this.g.measureText(localObject.toString()) / 2.0F, f3 + f2, this.g);
+       // paramCanvas.drawText(localObject.toString(), this.x.x - this.g.measureText(localObject.toString()) / 2.0F, this.x.y, this.g);
     }
 
     //magfield\东北等三个偏角方向文字

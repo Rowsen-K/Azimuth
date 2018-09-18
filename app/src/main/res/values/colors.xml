@@ -11,4 +11,10 @@
     <color name="c">#0F6B99</color>
     <color name="d">#38C600</color>
     <color name="e">#545359</color>
+    <color name="info_line">#ff000000</color>
+    <color name="info_line_yellow">#ff5b3b00</color>
+    <color name="info_text">#ff839ca2</color>
+    <color name="info_text_black">#ff1e1203</color>
+    <color name="info_title">#ff56686d</color>
+    <color name="info_title_white">#ffffffff</color>
 </resources>

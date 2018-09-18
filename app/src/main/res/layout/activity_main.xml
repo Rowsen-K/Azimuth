@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/fl_compass"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
     <LinearLayout
-        android:id="@+id/ll_compassmain"
+        android:id="@+id/ll_compassmain" xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical"
@@ -13,7 +9,7 @@
             android:id="@+id/relativeLayout1"
             android:layout_width="fill_parent"
             android:layout_height="0.0dip"
-            android:layout_weight="62.0">
+            android:layout_weight="60.0">
             <RelativeLayout
                 android:id="@+id/rl_cp"
                 android:layout_width="wrap_content"
@@ -121,7 +117,7 @@
             android:id="@+id/compass_below_layout"
             android:layout_width="fill_parent"
             android:layout_height="0.0dip"
-            android:layout_weight="42.0"
+            android:layout_weight="40.0"
             android:orientation="vertical">
             <LinearLayout
                 android:id="@+id/button_group_layout"
@@ -201,24 +197,316 @@
                     android:textSize="18sp" />
             </LinearLayout>
             <LinearLayout
-                android:id="@+id/info_layout"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:orientation="vertical">
-                <ImageView
-                    android:id="@+id/info_viewpager"
-                    android:layout_width="fill_parent"
-                    android:layout_height="0.0dip"
-                    android:layout_weight="1.0"
-                    android:src="@drawable/nullpic"/>
-                <LinearLayout
-                    android:id="@+id/info_pageindicator"
-                    android:layout_width="fill_parent"
-                    android:layout_height="20dp"
-                    android:background="#ff212021"
-                    android:gravity="center"
-                    android:orientation="vertical" />
-            </LinearLayout>
+                   android:layout_width="fill_parent"
+                   android:layout_height="wrap_content"
+                   android:gravity="center"
+                   android:orientation="vertical"
+                   android:weightSum="100.0">
+                   <View
+                       android:id="@+id/info_line1"
+                       android:layout_width="fill_parent"
+                       android:layout_height="1.0px"
+                       android:background="@color/info_line" />
+                   <LinearLayout
+                       android:layout_width="fill_parent"
+                       android:layout_height="0.0dip"
+                       android:layout_weight="33.0"
+                       android:orientation="horizontal">
+
+                       <View
+                           android:id="@+id/info_line2"
+                           android:layout_width="1.0px"
+                           android:layout_height="fill_parent"
+                           android:background="@color/info_line" />
+
+                       <LinearLayout
+                           android:id="@+id/two_coord_layout"
+                           android:layout_width="fill_parent"
+                           android:layout_height="wrap_content"
+                           android:orientation="horizontal"
+                           android:weightSum="100.0">
+                           <LinearLayout
+                               android:id="@+id/latitude_layout"
+                               android:layout_width="0.0dip"
+                               android:layout_height="fill_parent"
+                               android:layout_weight="50.0"
+                               android:gravity="center"
+                               android:orientation="vertical">
+                               <TextView
+                                   android:id="@+id/localion"
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   android:includeFontPadding="false"
+                                   android:text="位置"
+                                   android:textColor="@color/info_title"
+                                   android:textSize="@dimen/info_title" />
+                               <LinearLayout
+                                   android:layout_width="fill_parent"
+                                   android:layout_height="wrap_content"
+                                   android:gravity="center"
+                                   android:orientation="horizontal">
+                                   <TextView
+                                       android:id="@+id/position"
+                                       android:layout_width="wrap_content"
+                                       android:layout_height="wrap_content"
+                                       android:ellipsize="none"
+                                       android:includeFontPadding="false"
+
+                                       android:text="- - -"
+                                       android:textColor="@color/info_text"
+                                       android:textSize="@dimen/info_latitude_value" />
+                                   <ImageButton
+                                       android:id="@+id/ib_alert"
+                                       android:layout_width="18.0dip"
+                                       android:layout_height="18.0dip"
+                                       android:layout_marginLeft="10.0dip"
+                                       android:background="@null"
+                                       android:scaleType="fitXY"
+                                       android:src="@drawable/ic_alertred"
+                                       android:visibility="gone" />
+                                   <ImageButton
+                                       android:id="@+id/ib_refreshLoc"
+                                       android:layout_width="20.0dip"
+                                       android:layout_height="20.0dip"
+                                       android:layout_marginLeft="4.0dip"
+                                       android:background="@null"
+                                       android:scaleType="fitXY"
+                                       android:src="@drawable/btn_refresh" />
+                               </LinearLayout>
+                           </LinearLayout>
+                           <View
+                               android:id="@+id/info_line3"
+                               android:layout_width="1.0px"
+                               android:layout_height="fill_parent"
+                               android:background="@color/info_line" />
+                           <LinearLayout
+                               android:id="@+id/longitude_layout"
+                               android:layout_width="0.0dip"
+                               android:layout_height="fill_parent"
+                               android:layout_weight="50.0"
+                               android:gravity="center"
+                               android:orientation="vertical">
+                               <TextView
+                                   android:id="@+id/high_angle"
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   android:includeFontPadding="false"
+                                   android:text="太阳高度角"
+                                   android:textColor="@color/info_title"
+                                   android:textSize="@dimen/info_title" />
+                               <TextView
+                                   android:id="@+id/high_angle_degree"
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   android:ellipsize="none"
+                                   android:includeFontPadding="false"
+                                   android:singleLine="true"
+                                   android:text="- - -"
+                                   android:textColor="@color/info_text"
+                                   android:textSize="@dimen/info_latitude_value" />
+                           </LinearLayout>
+                       </LinearLayout>
+                   </LinearLayout>
+                   <View
+                       android:id="@+id/info_line4"
+                       android:layout_width="fill_parent"
+                       android:layout_height="1.0px"
+                       android:background="@color/info_line" />
+                   <LinearLayout
+                       android:layout_width="fill_parent"
+                       android:layout_height="0.0dip"
+                       android:layout_weight="33.0"
+                       android:orientation="horizontal"
+                       android:weightSum="100.0">
+
+                       <View
+                           android:id="@+id/info_line5"
+                           android:layout_width="1.0px"
+                           android:layout_height="fill_parent"
+                           android:background="@color/info_line" />
+
+                       <LinearLayout
+                           android:id="@+id/err_range_layout"
+                           android:layout_width="0.0dip"
+                           android:layout_height="fill_parent"
+                           android:layout_weight="50.0"
+                           android:gravity="center"
+                           android:orientation="vertical">
+
+                           <TextView
+                               android:id="@+id/cw"
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:includeFontPadding="false"
+                               android:text="太阳赤纬"
+                               android:textColor="@color/info_title"
+                               android:textSize="@dimen/info_title" />
+
+                           <LinearLayout
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:gravity="bottom"
+                               android:orientation="horizontal">
+
+                               <TextView
+                                   android:id="@+id/cw_degree"
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   android:includeFontPadding="false"
+                                   android:singleLine="true"
+                                   android:text="- - -"
+                                   android:textColor="@color/info_text"
+                                   android:textSize="@dimen/info_value" />
+
+                               <TextView
+                                   android:id="@+id/err_rangeunit_textview"
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   android:ellipsize="none"
+                                   android:includeFontPadding="false"
+                                   android:singleLine="true"
+                                   android:text=""
+                                   android:textColor="@color/info_text"
+                                   android:textSize="@dimen/info_title" />
+                           </LinearLayout>
+                       </LinearLayout>
+
+                       <View
+                           android:id="@+id/info_line6"
+                           android:layout_width="1.0px"
+                           android:layout_height="fill_parent"
+                           android:background="@color/info_line" />
+
+                       <LinearLayout
+                           android:id="@+id/pressure_layout"
+                           android:layout_width="0.0dip"
+                           android:layout_height="fill_parent"
+                           android:layout_weight="50.0"
+                           android:gravity="center"
+                           android:orientation="vertical">
+
+                           <TextView
+                               android:id="@+id/time_angle"
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:includeFontPadding="false"
+                               android:text="时角"
+                               android:textColor="@color/info_title"
+                               android:textSize="@dimen/info_title" />
+
+                           <LinearLayout
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:gravity="bottom"
+                               android:orientation="horizontal">
+
+                               <TextView
+                                   android:id="@+id/time_angle_degree"
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   android:includeFontPadding="false"
+                                   android:text="- - -"
+                                   android:textColor="@color/info_text"
+                                   android:textSize="@dimen/info_value" />
+
+                               <TextView
+                                   android:id="@+id/pressureunit_textview"
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   android:includeFontPadding="false"
+                                   android:text=""
+                                   android:textColor="@color/info_text"
+                                   android:textSize="@dimen/info_title" />
+                           </LinearLayout>
+                       </LinearLayout>
+                   </LinearLayout>
+                   <View
+                       android:id="@+id/info_line7"
+                       android:layout_width="fill_parent"
+                       android:layout_height="1.0px"
+                       android:background="@color/info_line" />
+                   <LinearLayout
+                       android:layout_width="fill_parent"
+                       android:layout_height="0.0dip"
+                       android:layout_weight="34.0"
+                       android:orientation="horizontal">
+
+                       <View
+                           android:id="@+id/info_line8"
+                           android:layout_width="1.0px"
+                           android:layout_height="fill_parent"
+                           android:background="@color/info_line" />
+
+                       <LinearLayout
+                           android:layout_width="fill_parent"
+                           android:layout_height="fill_parent"
+                           android:gravity="center_vertical"
+                           android:orientation="vertical">
+
+                           <LinearLayout
+                               android:id="@+id/address_layout"
+                               android:layout_width="fill_parent"
+                               android:layout_height="wrap_content"
+                               android:gravity="center_vertical"
+                               android:orientation="vertical"
+                               android:paddingRight="3.0dip"
+                               android:weightSum="2">
+
+                               <ImageView
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   android:layout_marginLeft="15.0dip"
+                                   android:visibility="gone" />
+
+                               <TextView
+                                   android:id="@+id/utc"
+                                   android:layout_width="match_parent"
+                                   android:layout_height="0dp"
+                                   android:layout_gravity="center"
+                                   android:focusable="true"
+                                   android:focusableInTouchMode="true"
+                                   android:includeFontPadding="false"
+                                   android:layout_weight="1"
+                                   android:gravity="center"
+                                   android:text="UTC时间:"
+                                   android:textColor="@color/info_text"
+                                   android:textSize="@dimen/info_addr_value" />
+                               <TextClock
+                                   android:id="@+id/time"
+                                   android:layout_width="match_parent"
+                                   android:layout_height="0dp"
+                                   android:layout_weight="1"
+                                   android:format24Hour="yyyy年MM月dd日 HH:mm:ss"
+                                   android:format12Hour="yyyy年MM月dd日 HH:mm:ss"
+                                   android:layout_gravity="center"
+                                   android:gravity="center"
+                                   android:textSize="22sp"/>
+                           </LinearLayout>
+                       </LinearLayout>
+                   </LinearLayout>
+                   <View
+                       android:id="@+id/info_line9"
+                       android:layout_width="fill_parent"
+                       android:layout_height="1.0px"
+                       android:background="@color/info_line" />
+               </LinearLayout>
         </LinearLayout>
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="0dp"
+           android:layout_weight="4">
+          <ImageView
+              android:id="@+id/mark"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:layout_marginLeft="25.0dip"
+              android:src="@drawable/icon_location"/>
+           <TextView
+            android:id="@+id/state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="状态："
+            android:layout_gravity="center"
+            android:gravity="center"/>
+       </LinearLayout>
     </LinearLayout>
-    </FrameLayout>

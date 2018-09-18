@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements SizeNotiRelativeLayout.a{
 
@@ -36,6 +37,13 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
     Location location;
     Calibrate cali;
     Canvas canvas;
+    TextView pos;
+    TextView high_angle;
+    TextView time_angle;
+    TextView utc;
+    TextView cw;
+    TextView state;
+    TextView mk;
     @RequiresApi(api = Build.VERSION_CODES.O)
     @SuppressLint("WrongCall")
     @Override
@@ -45,6 +53,12 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
         rl_cp = findViewById(R.id.rl_cp);
         s = findViewById(R.id.relativeLayout1);
         znzimg = findViewById(R.id.znzImage);
+        cw = findViewById(R.id.cw_degree);
+        time_angle = findViewById(R.id.time_angle_degree);
+        high_angle = findViewById(R.id.high_angle_degree);
+        utc = findViewById(R.id.utc);
+        pos = findViewById(R.id.position);  mk = findViewById(R.id.localion);
+        state = findViewById(R.id.state);
         s.setCallback(this);
         znzimg.setVisibility(View.GONE);
         compass = findViewById(R.id.compassview);
@@ -52,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
         compass.setCompassRotate(true);
         canvas = new Canvas();
         compass.draw(canvas);
-        tv = findViewById(R.id.azimuth_type_textview);
+        tv = findViewById(R.id.azimuth_textview);
         cali = new Calibrate();
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -63,23 +77,25 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
                         PackageManager.PERMISSION_GRANTED) {
             location = locationManager.getLastKnownLocation(provide);
             if(location!=null) {
-                tv.setText("当前位置为最后定位位置！");
-                tv.setTextColor(getResources().getColor(R.color.colorAccent));
+                state.setText("当前位置为上次GPS开启时最后定位位置！");
+                state.setTextColor(getResources().getColor(R.color.colorAccent));
             }
-            locationManager.requestLocationUpdates(provide, 10000, 1, new LocationListener() {
+            locationManager.requestLocationUpdates(provide, 5000, 1, new LocationListener() {
                 @Override
                 public void onLocationChanged(Location loc) {
                     location = loc;
-              //      pos.setText("纬度："+changeDegree(location.getLatitude())+"\n经度："+changeDegree(location.getLongitude()));
-               //     azimuth.setText(String.format("%.2f",cali.cal(location.getLongitude(),location.getLatitude())));
-               //     param1.setText(String.format("%.2f",Math.toDegrees(cali.C41)));
-               //     param2.setText(String.format("%.2f",Math.toDegrees(cali.C46)));
-               //     param3.setText(String.format("%.2f",Math.toDegrees(cali.C48)));
-               //     state.setTextColor(getResources().getColor(R.color.green));
-               //     state.setText("当前为实时位置");
-                    compass.getSensorValue().c(cali.cal(loc.getLongitude(), loc.getLatitude()).floatValue());
-                    compass.draw(canvas);
-                    compass.invalidate();
+                    float azimuth = cali.cal(location.getLongitude(),location.getLatitude()).floatValue();
+                   // pos.setText("纬度："+changeDegree(location.getLatitude())+"\n经度："+changeDegree(location.getLongitude()));
+                  //  tv.setText(String.format("%.2f",azimuth));
+                  //  cw.setText(String.format("%.2f",Math.toDegrees(cali.C41)));
+                 //   time_angle.setText(String.format("%.2f",Math.toDegrees(cali.C46)));
+                 //   high_angle.setText(String.format("%.2f",Math.toDegrees(cali.C48)));
+                    state.setTextColor(getResources().getColor(R.color.green));
+                    state.setText("当前为实时位置");
+                    set(azimuth);
+                //    compass.getSensorValue().c(azimuth);
+                   // compass.draw(canvas);
+                //    compass.invalidate();
                 }
 
                 @Override
@@ -109,10 +125,11 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
         //    param1.setText(String.format("%.2f",Math.toDegrees(cali.C41)));
          //   param2.setText(String.format("%.2f",Math.toDegrees(cali.C46)));
         //    param3.setText(String.format("%.2f",Math.toDegrees(cali.C48)));
-            compass.getSensorValue().c(cali.cal(location.getLongitude(), location.getLatitude()).floatValue());
-            compass.invalidate(); compass.draw(canvas);
-
+         //   compass.getSensorValue().c(cali.cal(location.getLongitude(), location.getLatitude()).floatValue());
+         //   compass.invalidate(); //compass.draw(canvas);
+            set(cali.cal(location.getLongitude(),location.getLatitude()).floatValue());
         }
+        else Toast.makeText(this,"请确认是否开启了GPS以及许可了程序获取位置数据的权限！",Toast.LENGTH_LONG).show();
         handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -123,11 +140,10 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
                  //   param1.setText(String.format("%.2f", Math.toDegrees(cali.C41)));
                  //   param2.setText(String.format("%.2f", Math.toDegrees(cali.C46)));
                  //   param3.setText(String.format("%.2f", Math.toDegrees(cali.C48)));
-                    compass.getSensorValue().c(cali.cal(location.getLongitude(), location.getLatitude()).floatValue());
-                    compass.invalidate();compass.draw(canvas);
-
-                    System.out.println(cali.cal(location.getLongitude(), location.getLatitude()));
-                    handler.postDelayed(this, 2000);
+                //    compass.getSensorValue().c(cali.cal(location.getLongitude(), location.getLatitude()).floatValue());
+                //    compass.invalidate();//compass.draw(canvas);
+                    set(cali.cal(location.getLongitude(), location.getLatitude()).floatValue());
+                    handler.postDelayed(this, 10);
                 }
             }
         },100);
@@ -149,4 +165,25 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
             this.rl_cp.getLayoutParams().width = ((int)(f * compassSizeRate));
         }
 
+    String changeDegree(double l){
+        double du = Math.floor(l);
+        double fen = (l-du)*60;
+        //double miao = Math.floor(((l-du)*60-fen)*60);
+        String temp = (int)du+"°"+String.format("%.3f",fen)+"′";
+        return temp;
+    }//位置数据小数化度分秒
+
+    void set(float azimuth){
+        mk.setVisibility(View.GONE);
+        pos.setText("纬度："+changeDegree(location.getLatitude())+"\n经度："+changeDegree(location.getLongitude()));
+        tv.setText(String.format("%.2f",azimuth));
+        cw.setText(String.format("%.2f",Math.toDegrees(cali.C41)));
+        time_angle.setText(String.format("%.2f",Math.toDegrees(cali.C46)));
+        high_angle.setText(String.format("%.2f",Math.toDegrees(cali.C48)));
+      //  state.setTextColor(getResources().getColor(R.color.green));
+      //  state.setText("当前为实时位置");
+        compass.getSensorValue().c(360.0f-azimuth);
+        compass.draw(canvas);
+        compass.invalidate();
+    }
 }
