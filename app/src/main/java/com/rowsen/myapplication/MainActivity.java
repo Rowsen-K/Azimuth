@@ -7,8 +7,13 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Canvas;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -18,6 +23,7 @@ import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,11 +50,22 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
     TextView cw;
     TextView state;
     TextView mk;
+    ImageView mkimg;
+
+    SensorManager sm;
+    Sensor m;
+    Sensor a;
+    float[] mv;
+    float[] av;
+    SensorEventListener myListener;
     @RequiresApi(api = Build.VERSION_CODES.O)
     @SuppressLint("WrongCall")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(getSupportActionBar()!=null){
+            getSupportActionBar().hide();
+        }
         setContentView(R.layout.activity_main);
         rl_cp = findViewById(R.id.rl_cp);
         s = findViewById(R.id.relativeLayout1);
@@ -57,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
         time_angle = findViewById(R.id.time_angle_degree);
         high_angle = findViewById(R.id.high_angle_degree);
         utc = findViewById(R.id.utc);
-        pos = findViewById(R.id.position);  mk = findViewById(R.id.localion);
+        pos = findViewById(R.id.position); mkimg = findViewById(R.id.mark); mk = findViewById(R.id.localion);
         state = findViewById(R.id.state);
         s.setCallback(this);
         znzimg.setVisibility(View.GONE);
@@ -91,6 +108,7 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
                  //   time_angle.setText(String.format("%.2f",Math.toDegrees(cali.C46)));
                  //   high_angle.setText(String.format("%.2f",Math.toDegrees(cali.C48)));
                     state.setTextColor(getResources().getColor(R.color.green));
+                    mkimg.setImageResource(R.drawable.icon_location);
                     state.setText("当前为实时位置");
                     set(azimuth);
                 //    compass.getSensorValue().c(azimuth);
@@ -130,6 +148,33 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
             set(cali.cal(location.getLongitude(),location.getLatitude()).floatValue());
         }
         else Toast.makeText(this,"请确认是否开启了GPS以及许可了程序获取位置数据的权限！",Toast.LENGTH_LONG).show();
+
+        sm = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
+        m = sm.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+        a = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mv = new float[3];
+        av = new float[3];
+        sm.registerListener(myListener,m,SensorManager.SENSOR_DELAY_NORMAL);
+        sm.registerListener(myListener,a,SensorManager.SENSOR_DELAY_NORMAL);
+        myListener = new SensorEventListener() {
+            @Override
+            public void onSensorChanged(SensorEvent sensorEvent) {
+                System.out.println(sensorEvent.sensor.getType());
+                if(sensorEvent.sensor.getType()==Sensor.TYPE_ACCELEROMETER)
+                    av = sensorEvent.values;
+                if(sensorEvent.sensor.getType()==Sensor.TYPE_MAGNETIC_FIELD)
+                    mv = sensorEvent.values;
+                tv.setText(getNorth()+"");
+                for (float f:av) System.out.println("------av:"+f);
+                for (float f:mv) System.out.println("==========mv"+f);
+            }
+
+            @Override
+            public void onAccuracyChanged(Sensor sensor, int i) {
+
+            }
+        };
+
         handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -165,6 +210,12 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
             this.rl_cp.getLayoutParams().width = ((int)(f * compassSizeRate));
         }
 
+    @Override
+    protected void onPause() {
+        sm.unregisterListener(myListener);
+        super.onPause();
+    }
+
     String changeDegree(double l){
         double du = Math.floor(l);
         double fen = (l-du)*60;
@@ -176,14 +227,24 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
     void set(float azimuth){
         mk.setVisibility(View.GONE);
         pos.setText("纬度："+changeDegree(location.getLatitude())+"\n经度："+changeDegree(location.getLongitude()));
-        tv.setText(String.format("%.2f",azimuth));
-        cw.setText(String.format("%.2f",Math.toDegrees(cali.C41)));
-        time_angle.setText(String.format("%.2f",Math.toDegrees(cali.C46)));
-        high_angle.setText(String.format("%.2f",Math.toDegrees(cali.C48)));
+        //tv.setText(String.format("%.2f",azimuth));
+        cw.setText(String.format("%.2f",Math.toDegrees(cali.C41))+"°");
+        time_angle.setText(String.format("%.2f",Math.toDegrees(cali.C46))+"°");
+        high_angle.setText(String.format("%.2f",Math.toDegrees(cali.C48))+"°");
       //  state.setTextColor(getResources().getColor(R.color.green));
       //  state.setText("当前为实时位置");
         compass.getSensorValue().c(360.0f-azimuth);
+        compass.getSensorValue().b(Float.valueOf(String.format("%.2f",azimuth)));
         compass.draw(canvas);
         compass.invalidate();
     }
+    float getNorth(){
+        float[] result = new float[3];
+        float[] r = new float[9];
+        sm.getRotationMatrix(r,null,av,mv);
+        sm.getOrientation(r,result);
+        System.out.println("================North:"+Math.toDegrees(result[0]));
+        return (float) Math.toDegrees(result[0]);
+    }
+
 }

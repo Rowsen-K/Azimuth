@@ -216,8 +216,9 @@ public class a {
         if (!this.l) {
             f1 = -f1;
         }
-        localPath.addArc((RectF) localObject, -90.0F, f1);
-        paramCanvas.drawPath(this.i, this.c);
+        //可以在此处绘制一个外圈标记。预计加入磁北的标记
+       // localPath.addArc((RectF) localObject, -90.0F, f1);
+      //  paramCanvas.drawPath(this.i, this.c);
     }
 
     private void b(Canvas paramCanvas, float paramFloat1, String paramString, float paramFloat2, Paint paramPaint) {
@@ -296,10 +297,14 @@ public class a {
             this.f.setTextSize(a(30.0F));
             this.E = this.j.a();
         }
-        paramCanvas.drawPath(this.G, this.F);
-        paramCanvas.drawPath(this.H, this.d);
-        a(paramCanvas, 303.0F, String.format(Locale.US, "%dμT", new Object[]{Integer.valueOf((int) this.j.a())}), 445.0F, this.h);
-        a(paramCanvas, 60.0F, "mag.field", 445.0F, this.f);
+       // paramCanvas.drawPath(this.G, this.F);
+      //  paramCanvas.drawPath(this.H, this.d);
+        this.h.setColor(this.s);
+        a(paramCanvas, 303.0F, String.format(Locale.US, "Rowsen", new Object[]{Integer.valueOf((int) this.j.a())}), 445.0F, this.h);
+        this.h.setColor(this.o);
+        this.f.setColor(this.o);
+        a(paramCanvas, 90.0F, "Design By Rowsen", 445.0F, this.f);
+        this.f.setColor(this.p);
     }
 
     //正北指针标记
@@ -345,7 +350,7 @@ public class a {
     }
 
 
-    //主表盘的颜色,中心圈和外圈
+    //中心实时数据的绘制
     private void e(Canvas paramCanvas) {
         this.c.reset();
         this.c.setAntiAlias(true);
@@ -359,22 +364,19 @@ public class a {
         } else {
             f1 = (this.j.b() + 720.0F) % 360.0F;
         }
-        System.out.println("=====================f1:"+f1);
         StringBuilder localObject = new StringBuilder();
-         localObject.append(com.rowsen.myapplication.d.a(f1));
+       //  localObject.append(com.rowsen.myapplication.d.a(f1));
         localObject.append(" ");
         localObject.append(String.valueOf(f1));
         localObject.append("°");
-        System.out.println("======================数据："+localObject);
         Rect localRect = new Rect();
         this.g.getTextBounds(localObject.toString(), 0, localObject.length(), localRect);
         float f3 = this.x.y;
         float f2 = localRect.height() / 2.0F;
         paramCanvas.drawText(localObject.toString(), this.x.x - this.g.measureText(localObject.toString()) / 2.0F, f3 + f2, this.g);
-       // paramCanvas.drawText(localObject.toString(), this.x.x - this.g.measureText(localObject.toString()) / 2.0F, this.x.y, this.g);
     }
 
-    //magfield\东北等三个偏角方向文字
+    //旋转绘制功能
     private void f(Canvas paramCanvas) {
         paramCanvas.save();
         if (this.l) {
@@ -404,7 +406,7 @@ public class a {
         a(paramCanvas, 240.0F, "330", 330.0F);
     }
 
-    //磁单位\东西南文字\中心显示实时数据文字
+    //八个方位的文字
     private void h(Canvas paramCanvas) {
         Paint.FontMetrics localFontMetrics = this.a.getFontMetrics();
         float f1 = localFontMetrics.bottom;
@@ -420,10 +422,10 @@ public class a {
         b(paramCanvas, 180.0F, "西", f1, this.b);
         this.b.setTextSize(a(40.0F));
         this.b.setColor(this.p);
-        b(paramCanvas, 315.0F, "东北", f1, this.b);
-        b(paramCanvas, 45.0F, "东南", f1, this.b);
-        b(paramCanvas, 135.0F, "西南", f1, this.b);
-        b(paramCanvas, 225.0F, "西北", f1, this.b);
+      //  b(paramCanvas, 315.0F, "东北", f1, this.b);
+     //   b(paramCanvas, 45.0F, "东南", f1, this.b);
+     //   b(paramCanvas, 135.0F, "西南", f1, this.b);
+      //  b(paramCanvas, 225.0F, "西北", f1, this.b);
     }
 
     public b a() {

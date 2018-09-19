@@ -17,4 +17,7 @@
     <color name="info_text_black">#ff1e1203</color>
     <color name="info_title">#ff56686d</color>
     <color name="info_title_white">#ffffffff</color>
+    <color name="compass">#303030</color>
+    <color name="info">#4A4A4A</color>
+    <color name="state">#212021</color>
 </resources>
