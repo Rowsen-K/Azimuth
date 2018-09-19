@@ -175,6 +175,7 @@ public class a {
         this.B = true;
     }
 
+    //绘制圆盘及外圈
     private void b(Canvas paramCanvas) {
         float f1 = a(430.0F);
         paramCanvas.drawCircle(this.x.x, this.x.y, f1, this.e);
@@ -217,8 +218,8 @@ public class a {
             f1 = -f1;
         }
         //可以在此处绘制一个外圈标记。预计加入磁北的标记
-       // localPath.addArc((RectF) localObject, -90.0F, f1);
-      //  paramCanvas.drawPath(this.i, this.c);
+        // localPath.addArc((RectF) localObject, -90.0F, f1);
+        //  paramCanvas.drawPath(this.i, this.c);
     }
 
     private void b(Canvas paramCanvas, float paramFloat1, String paramString, float paramFloat2, Paint paramPaint) {
@@ -284,12 +285,12 @@ public class a {
             this.F.setStyle(Paint.Style.STROKE);
             this.F.setAntiAlias(true);
             this.d.setAntiAlias(true);
-            this.F.setStrokeWidth(a(25.0F));
+            this.F.setStrokeWidth(a(0.0F));
             this.F.setColor(this.n);
             RectF localRectF = new RectF(this.x.x - f1, this.x.y - f1, this.x.x + f1, this.x.y + f1);
             this.G.reset();
             //最外的圆弧指示magfield
-            this.G.addArc(localRectF, 310.0F, 100.0F);
+          //  this.G.addArc(localRectF, 00.0F, 360.0F);
             f1 = Math.min(1.0F, this.j.a() / ' ') * 100;
             this.H.reset();
             this.H.addArc(localRectF, 410 - f1, f1);
@@ -300,7 +301,9 @@ public class a {
        // paramCanvas.drawPath(this.G, this.F);
       //  paramCanvas.drawPath(this.H, this.d);
         this.h.setColor(this.s);
-        a(paramCanvas, 303.0F, String.format(Locale.US, "Rowsen", new Object[]{Integer.valueOf((int) this.j.a())}), 445.0F, this.h);
+        a(paramCanvas, j.b(), String.format(Locale.US, "Rowsen", new Object[]{Integer.valueOf((int) this.j.a())}), 445.0F, this.h);
+        this.h.setColor(this.o);
+        this.f.setColor(this.o);
         this.h.setColor(this.o);
         this.f.setColor(this.o);
         a(paramCanvas, 90.0F, "Design By Rowsen", 445.0F, this.f);

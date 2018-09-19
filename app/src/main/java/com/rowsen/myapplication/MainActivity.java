@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
     float[] mv;
     float[] av;
     SensorEventListener myListener;
+    String degree;
     @RequiresApi(api = Build.VERSION_CODES.O)
     @SuppressLint("WrongCall")
     @Override
