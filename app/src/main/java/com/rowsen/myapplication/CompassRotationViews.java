@@ -29,6 +29,7 @@ public class CompassRotationViews
         super(paramContext, paramAttributeSet, paramInt);
     }
 
+ /*
     public void a()
     {
         this.b = getDrawable();
@@ -54,5 +55,6 @@ public class CompassRotationViews
         this.b = null;
         paramCanvas.restore();
     }
+    */
 }
 

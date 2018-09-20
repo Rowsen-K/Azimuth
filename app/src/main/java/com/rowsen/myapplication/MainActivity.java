@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Canvas;
 import android.hardware.Sensor;
@@ -22,11 +23,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements SizeNotiRelativeLayout.a{
 
@@ -51,12 +55,15 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
     TextView state;
     TextView mk;
     ImageView mkimg;
+    Button about;
 
     SensorManager sm;
     Sensor m;
     Sensor a;
+    Sensor o;
     float[] mv;
     float[] av;
+    float[] ov;
     SensorEventListener myListener;
     String degree;
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -77,16 +84,24 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
         utc = findViewById(R.id.utc);
         pos = findViewById(R.id.position); mkimg = findViewById(R.id.mark); mk = findViewById(R.id.localion);
         state = findViewById(R.id.state);
+        about = findViewById(R.id.about);
+        about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,AboutActivity.class);
+                startActivity(intent);
+            }
+        });
         s.setCallback(this);
         znzimg.setVisibility(View.GONE);
         compass = findViewById(R.id.compassview);
         compass.setVisibility(View.VISIBLE);
         compass.setCompassRotate(true);
         canvas = new Canvas();
+        compass.setNorth(0);
         compass.draw(canvas);
         tv = findViewById(R.id.azimuth_textview);
         cali = new Calibrate();
-
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         provide = LocationManager.GPS_PROVIDER;
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) ==
@@ -103,18 +118,10 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
                 public void onLocationChanged(Location loc) {
                     location = loc;
                     float azimuth = cali.cal(location.getLongitude(),location.getLatitude()).floatValue();
-                   // pos.setText("纬度："+changeDegree(location.getLatitude())+"\n经度："+changeDegree(location.getLongitude()));
-                  //  tv.setText(String.format("%.2f",azimuth));
-                  //  cw.setText(String.format("%.2f",Math.toDegrees(cali.C41)));
-                 //   time_angle.setText(String.format("%.2f",Math.toDegrees(cali.C46)));
-                 //   high_angle.setText(String.format("%.2f",Math.toDegrees(cali.C48)));
                     state.setTextColor(getResources().getColor(R.color.green));
                     mkimg.setImageResource(R.drawable.icon_location);
                     state.setText("当前为实时位置");
                     set(azimuth);
-                //    compass.getSensorValue().c(azimuth);
-                   // compass.draw(canvas);
-                //    compass.invalidate();
                 }
 
                 @Override
@@ -137,15 +144,7 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
                     Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.ACCESS_COARSE_LOCATION },0);
         }
-        //  param1.setText(String.valueOf(ciwei));
         if(location!=null){
-          //  pos.setText("纬度："+changeDegree(location.getLatitude())+"经度："+changeDegree(location.getLongitude()));
-       //     azimuth.setText(String.format("%.2f",cali.cal(location.getLongitude(),location.getLatitude())));
-        //    param1.setText(String.format("%.2f",Math.toDegrees(cali.C41)));
-         //   param2.setText(String.format("%.2f",Math.toDegrees(cali.C46)));
-        //    param3.setText(String.format("%.2f",Math.toDegrees(cali.C48)));
-         //   compass.getSensorValue().c(cali.cal(location.getLongitude(), location.getLatitude()).floatValue());
-         //   compass.invalidate(); //compass.draw(canvas);
             set(cali.cal(location.getLongitude(),location.getLatitude()).floatValue());
         }
         else Toast.makeText(this,"请确认是否开启了GPS以及许可了程序获取位置数据的权限！",Toast.LENGTH_LONG).show();
@@ -153,23 +152,30 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
         sm = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
         m = sm.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
         a = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        o = sm.getDefaultSensor(Sensor.TYPE_ORIENTATION);
+
         mv = new float[3];
         av = new float[3];
-        sm.registerListener(myListener,m,SensorManager.SENSOR_DELAY_NORMAL);
-        sm.registerListener(myListener,a,SensorManager.SENSOR_DELAY_NORMAL);
+        ov = new float[3];
+     //   sm.registerListener(myListener,m,SensorManager.SENSOR_DELAY_UI);
+    //    sm.registerListener(myListener,a,SensorManager.SENSOR_DELAY_UI);
+        sm.registerListener(myListener,o,SensorManager.SENSOR_DELAY_UI);
+        List<Sensor> a = sm.getSensorList(Sensor.TYPE_ALL);
         myListener = new SensorEventListener() {
             @Override
             public void onSensorChanged(SensorEvent sensorEvent) {
-                System.out.println(sensorEvent.sensor.getType());
-                if(sensorEvent.sensor.getType()==Sensor.TYPE_ACCELEROMETER)
+             /*   if(sensorEvent.sensor.getType()==Sensor.TYPE_ACCELEROMETER)
                     av = sensorEvent.values;
                 if(sensorEvent.sensor.getType()==Sensor.TYPE_MAGNETIC_FIELD)
                     mv = sensorEvent.values;
-                tv.setText(getNorth()+"");
-                for (float f:av) System.out.println("------av:"+f);
-                for (float f:mv) System.out.println("==========mv"+f);
+                */
+             if(sensorEvent.sensor.getType()==Sensor.TYPE_ORIENTATION)
+                 ov = sensorEvent.values;
+                String north = getNorth();
+                tv.setText(north);
+                compass.setNorth(Float.valueOf(north));
+                compass.invalidate();
             }
-
             @Override
             public void onAccuracyChanged(Sensor sensor, int i) {
 
@@ -181,21 +187,11 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
             @Override
             public void run() {
                 if(location!=null) {
-                   // cali.cal(location.getLongitude(), location.getLatitude());
-                  //  azimuth.setText(String.format("%.2f", cali.cal(location.getLongitude(), location.getLatitude())));
-                 //   param1.setText(String.format("%.2f", Math.toDegrees(cali.C41)));
-                 //   param2.setText(String.format("%.2f", Math.toDegrees(cali.C46)));
-                 //   param3.setText(String.format("%.2f", Math.toDegrees(cali.C48)));
-                //    compass.getSensorValue().c(cali.cal(location.getLongitude(), location.getLatitude()).floatValue());
-                //    compass.invalidate();//compass.draw(canvas);
                     set(cali.cal(location.getLongitude(), location.getLatitude()).floatValue());
                     handler.postDelayed(this, 10);
                 }
             }
         },100);
-
-
-      //  compass.getSensorValue().c(new Calibrate().cal(120.084, 60.422).floatValue());
     }
 
     @Override
@@ -217,6 +213,14 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
         super.onPause();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+       // sm.registerListener(myListener,m,SensorManager.SENSOR_DELAY_NORMAL);
+       // sm.registerListener(myListener,a,SensorManager.SENSOR_DELAY_NORMAL);
+        sm.registerListener(myListener,o,SensorManager.SENSOR_DELAY_UI);
+    }
+
     String changeDegree(double l){
         double du = Math.floor(l);
         double fen = (l-du)*60;
@@ -236,16 +240,18 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
       //  state.setText("当前为实时位置");
         compass.getSensorValue().c(360.0f-azimuth);
         compass.getSensorValue().b(Float.valueOf(String.format("%.2f",azimuth)));
-        compass.draw(canvas);
         compass.invalidate();
     }
-    float getNorth(){
-        float[] result = new float[3];
+    String getNorth(){
+       /* float[] result = new float[3];
         float[] r = new float[9];
         sm.getRotationMatrix(r,null,av,mv);
         sm.getOrientation(r,result);
-        System.out.println("================North:"+Math.toDegrees(result[0]));
-        return (float) Math.toDegrees(result[0]);
+        */
+        Double north = Math.toDegrees(ov[0]);
+        north = Double.valueOf(ov[0]);
+        if(north<0) north = north + 360;
+        return String.format("%.0f",north);
     }
 
 }

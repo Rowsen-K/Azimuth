@@ -13,7 +13,6 @@ public class CompassView
         extends View {
     private a a;
     private boolean b;
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     public CompassView(Context paramContext) {
         super(paramContext);
@@ -105,4 +104,7 @@ public class CompassView
     public void setCompassRotate(boolean paramBoolean) {
         this.a.a(paramBoolean);
     }
+     public void setNorth(float north){
+        a.setNorth(north);
+     }
 }

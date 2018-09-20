@@ -38,7 +38,7 @@ public class a {
     private final Paint h = new Paint(1);
     private final Path i = new Path();
     private final b j = new b();
-   // private final float k = 430.0F;
+    // private final float k = 430.0F;
     private boolean l = true;
     private int m;
     private int n;
@@ -58,7 +58,7 @@ public class a {
 
     private Path z = null;
 
-
+    float north;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public a(Context paramContext) {
@@ -156,13 +156,13 @@ public class a {
         this.d.setStrokeWidth(a(25.0F));
         this.d.setStyle(Paint.Style.STROKE);
         this.d.setStrokeCap(Paint.Cap.ROUND);
-         this.m = t.getColor(R.color.a);   //数字圈的颜色
-          this.n = ContextCompat.getColor(this.t, R.color.b);  //主表盘的颜色,中心圈和外圈
-           this.o = ContextCompat.getColor(this.t, R.color.white);   //磁单位\东西南文字\360等度数数字及中心显示实时数据文字的颜色
-          this.p = ContextCompat.getColor(this.t, R.color.e);   //magfield\东北等三个偏角方向文字及外圈描边的颜色
-            this.q = ContextCompat.getColor(this.t, R.color.c);   //北字的标记色
-           this.r = ContextCompat.getColor(this.t, R.color.colorAccent);   //正北指针标记色
-          this.s = ContextCompat.getColor(this.t, R.color.green);
+        this.m = ContextCompat.getColor(this.t,R.color.a);   //数字圈的颜色
+        this.n = ContextCompat.getColor(this.t, R.color.b);  //主表盘的颜色,中心圈和外圈
+        this.o = ContextCompat.getColor(this.t, R.color.white);   //磁单位\东西南文字\360等度数数字及中心显示实时数据文字的颜色
+        this.p = ContextCompat.getColor(this.t, R.color.e);   //magfield\东北等三个偏角方向文字及外圈描边的颜色
+        this.q = ContextCompat.getColor(this.t, R.color.c);   //北字的标记色
+        this.r = ContextCompat.getColor(this.t, R.color.colorAccent);   //正北指针标记色
+        this.s = ContextCompat.getColor(this.t, R.color.green);
         this.e.setColor(this.n);
         this.e.setStyle(Paint.Style.FILL);
         this.c.setStrokeCap(Paint.Cap.ROUND);
@@ -214,12 +214,14 @@ public class a {
         }
         this.i.reset();
         Path localPath = this.i;
-        if (!this.l) {
+     /*   if (!this.l) {
             f1 = -f1;
-        }
+        }  */
         //可以在此处绘制一个外圈标记。预计加入磁北的标记
-        // localPath.addArc((RectF) localObject, -90.0F, f1);
-        //  paramCanvas.drawPath(this.i, this.c);
+        this.c.setColor(this.r);
+        localPath.addArc((RectF) localObject, 270.0f-north - 1.5f, 3f);
+        paramCanvas.drawPath(this.i, this.c);
+        this.c.setColor(this.s);
     }
 
     private void b(Canvas paramCanvas, float paramFloat1, String paramString, float paramFloat2, Paint paramPaint) {
@@ -251,8 +253,8 @@ public class a {
                 }
                 f1 = (float) Math.cos(d1);
                 float f2 = (float) Math.sin(d1);
-               float f3 = a(330.0F);
-               float f4 = a(330.0F);
+                float f3 = a(330.0F);
+                float f4 = a(330.0F);
                 this.A.moveTo(f3 * f1 + paramPoint.x, f4 * f2 + paramPoint.y);
                 f3 = a(380.0F);
                 f4 = a(380.0F);
@@ -290,7 +292,7 @@ public class a {
             RectF localRectF = new RectF(this.x.x - f1, this.x.y - f1, this.x.x + f1, this.x.y + f1);
             this.G.reset();
             //最外的圆弧指示magfield
-          //  this.G.addArc(localRectF, 00.0F, 360.0F);
+            //  this.G.addArc(localRectF, 00.0F, 360.0F);
             f1 = Math.min(1.0F, this.j.a() / ' ') * 100;
             this.H.reset();
             this.H.addArc(localRectF, 410 - f1, f1);
@@ -298,10 +300,10 @@ public class a {
             this.f.setTextSize(a(30.0F));
             this.E = this.j.a();
         }
-       // paramCanvas.drawPath(this.G, this.F);
-      //  paramCanvas.drawPath(this.H, this.d);
+        // paramCanvas.drawPath(this.G, this.F);
+        //  paramCanvas.drawPath(this.H, this.d);
         this.h.setColor(this.s);
-        a(paramCanvas, j.b(), String.format(Locale.US, "Rowsen", new Object[]{Integer.valueOf((int) this.j.a())}), 445.0F, this.h);
+        a(paramCanvas, 270.0f-north, String.format(Locale.US, "Rowsen", new Object[]{Integer.valueOf((int) this.j.a())}), 445.0F, this.h);
         this.h.setColor(this.o);
         this.f.setColor(this.o);
         this.h.setColor(this.o);
@@ -368,7 +370,7 @@ public class a {
             f1 = (this.j.b() + 720.0F) % 360.0F;
         }
         StringBuilder localObject = new StringBuilder();
-       //  localObject.append(com.rowsen.myapplication.d.a(f1));
+        //  localObject.append(com.rowsen.myapplication.d.a(f1));
         localObject.append(" ");
         localObject.append(String.valueOf(f1));
         localObject.append("°");
@@ -425,10 +427,10 @@ public class a {
         b(paramCanvas, 180.0F, "西", f1, this.b);
         this.b.setTextSize(a(40.0F));
         this.b.setColor(this.p);
-      //  b(paramCanvas, 315.0F, "东北", f1, this.b);
-     //   b(paramCanvas, 45.0F, "东南", f1, this.b);
-     //   b(paramCanvas, 135.0F, "西南", f1, this.b);
-      //  b(paramCanvas, 225.0F, "西北", f1, this.b);
+        //  b(paramCanvas, 315.0F, "东北", f1, this.b);
+        //   b(paramCanvas, 45.0F, "东南", f1, this.b);
+        //   b(paramCanvas, 135.0F, "西南", f1, this.b);
+        //  b(paramCanvas, 225.0F, "西北", f1, this.b);
     }
 
     public b a() {
@@ -448,7 +450,7 @@ public class a {
         localStringBuilder.append("], oldh = [");
         localStringBuilder.append(paramInt4);
         localStringBuilder.append("]");
-     //   com.lyracss.supercompass.c.a.a("CanvasHelper", localStringBuilder.oString());
+        //   com.lyracss.supercompass.c.a.a("CanvasHelper", localStringBuilder.oString());
         Log.e("CanvasHelper", localStringBuilder.toString());
         this.B = false;
     }
@@ -470,5 +472,9 @@ public class a {
 
     public void a(boolean paramBoolean) {
         this.l = paramBoolean;
+    }
+
+    public void setNorth(float north) {
+        this.north = north;
     }
 }
