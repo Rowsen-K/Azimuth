@@ -65,7 +65,6 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
     float[] av;
     float[] ov;
     SensorEventListener myListener;
-    String degree;
     @RequiresApi(api = Build.VERSION_CODES.O)
     @SuppressLint("WrongCall")
     @Override
@@ -122,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
                     mkimg.setImageResource(R.drawable.icon_location);
                     state.setText("当前为实时位置");
                     set(azimuth);
+                    compass.setFlag(true);
                 }
 
                 @Override
@@ -150,17 +150,16 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
         else Toast.makeText(this,"请确认是否开启了GPS以及许可了程序获取位置数据的权限！",Toast.LENGTH_LONG).show();
 
         sm = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
-        m = sm.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-        a = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+      //  m = sm.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+      //  a = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         o = sm.getDefaultSensor(Sensor.TYPE_ORIENTATION);
 
-        mv = new float[3];
-        av = new float[3];
+     //   mv = new float[3];
+     //   av = new float[3];
         ov = new float[3];
      //   sm.registerListener(myListener,m,SensorManager.SENSOR_DELAY_UI);
     //    sm.registerListener(myListener,a,SensorManager.SENSOR_DELAY_UI);
         sm.registerListener(myListener,o,SensorManager.SENSOR_DELAY_UI);
-        List<Sensor> a = sm.getSensorList(Sensor.TYPE_ALL);
         myListener = new SensorEventListener() {
             @Override
             public void onSensorChanged(SensorEvent sensorEvent) {
@@ -169,12 +168,19 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
                 if(sensorEvent.sensor.getType()==Sensor.TYPE_MAGNETIC_FIELD)
                     mv = sensorEvent.values;
                 */
-             if(sensorEvent.sensor.getType()==Sensor.TYPE_ORIENTATION)
-                 ov = sensorEvent.values;
-                String north = getNorth();
-                tv.setText(north);
-                compass.setNorth(Float.valueOf(north));
-                compass.invalidate();
+             if(sensorEvent.sensor.getType()==Sensor.TYPE_ORIENTATION) {
+                 //ov = sensorEvent.values;
+               synchronized (MainActivity.class){
+                   for(int n = 0;n < ov.length;n++){
+                       ov[n] = sensorEvent.values[n];
+                       System.out.println("=======ov"+n+":"+ov[n]);
+                   }
+                 String north = getNorth();
+                 tv.setText(north);
+                 compass.setNorth(Float.valueOf(north));
+                 compass.invalidate();
+                 }
+             }
             }
             @Override
             public void onAccuracyChanged(Sensor sensor, int i) {
@@ -248,8 +254,8 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
         sm.getRotationMatrix(r,null,av,mv);
         sm.getOrientation(r,result);
         */
-        Double north = Math.toDegrees(ov[0]);
-        north = Double.valueOf(ov[0]);
+        //Double north = Math.toDegrees(ov[0]);
+        float north = ov[0];
         if(north<0) north = north + 360;
         return String.format("%.0f",north);
     }

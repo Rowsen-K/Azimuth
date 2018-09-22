@@ -107,4 +107,7 @@ public class CompassView
      public void setNorth(float north){
         a.setNorth(north);
      }
+     public void setFlag(boolean flag){
+        a.setFlag(flag);
+     }
 }

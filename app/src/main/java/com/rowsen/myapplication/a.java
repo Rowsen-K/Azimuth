@@ -59,7 +59,7 @@ public class a {
     private Path z = null;
 
     float north;
-
+    boolean flag = false;
     @RequiresApi(api = Build.VERSION_CODES.O)
     public a(Context paramContext) {
         this.t = paramContext;
@@ -303,7 +303,8 @@ public class a {
         // paramCanvas.drawPath(this.G, this.F);
         //  paramCanvas.drawPath(this.H, this.d);
         this.h.setColor(this.s);
-        a(paramCanvas, 270.0f-north, String.format(Locale.US, "Rowsen", new Object[]{Integer.valueOf((int) this.j.a())}), 445.0F, this.h);
+      //  a(paramCanvas, 270.0f-north, String.format(Locale.US, "Rowsen", new Object[]{Integer.valueOf((int) this.j.a())}), 445.0F, this.h);
+        a(paramCanvas, 270.0f-north, "Rowsen",  445.0F, this.h);
         this.h.setColor(this.o);
         this.f.setColor(this.o);
         this.h.setColor(this.o);
@@ -372,7 +373,9 @@ public class a {
         StringBuilder localObject = new StringBuilder();
         //  localObject.append(com.rowsen.myapplication.d.a(f1));
         localObject.append(" ");
+        if (flag)
         localObject.append(String.valueOf(f1));
+        else localObject.append("---");
         localObject.append("°");
         Rect localRect = new Rect();
         this.g.getTextBounds(localObject.toString(), 0, localObject.length(), localRect);
@@ -476,5 +479,8 @@ public class a {
 
     public void setNorth(float north) {
         this.north = north;
+    }
+    public void setFlag(boolean flag){
+        this.flag = flag;
     }
 }
