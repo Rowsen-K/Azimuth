@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
     TextView mk;
     ImageView mkimg;
     Button about;
-
+    Button hold;
     SensorManager sm;
     Sensor m;
     Sensor a;
@@ -91,6 +91,20 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
                 startActivity(intent);
             }
         });
+        hold = findViewById(R.id.hold);
+        hold.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(compass.getRotationState()){
+                    hold.setText("锁定");
+                    compass.setCompassRotate(false);
+                }
+                else {
+                    hold.setText("释放");
+                    compass.setCompassRotate(true);
+                }
+            }
+        });
         s.setCallback(this);
         znzimg.setVisibility(View.GONE);
         compass = findViewById(R.id.compassview);
@@ -109,8 +123,9 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
                         PackageManager.PERMISSION_GRANTED) {
             location = locationManager.getLastKnownLocation(provide);
             if(location!=null) {
-                state.setText("当前位置为上次GPS开启时最后定位位置！");
+                state.setText("当前为上次GPS关闭时最后定位点");
                 state.setTextColor(getResources().getColor(R.color.colorAccent));
+                mkimg.setImageResource(R.drawable.ic_alertred);
             }
             locationManager.requestLocationUpdates(provide, 5000, 1, new LocationListener() {
                 @Override
@@ -131,12 +146,15 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
 
                 @Override
                 public void onProviderEnabled(String s) {
-
+                    Toast.makeText(MainActivity.this,"GPS已打开请耐心等待等位!",Toast.LENGTH_LONG).show();
                 }
 
                 @Override
                 public void onProviderDisabled(String s) {
-
+                    Toast.makeText(MainActivity.this,"请确认是否开启了GPS以及许可了程序获取位置数据的权限！",Toast.LENGTH_LONG).show();
+                    mkimg.setImageResource(R.drawable.ic_alertred);
+                    state.setText("请确认GPS状态");
+                    state.setTextColor(getResources().getColor(R.color.colorAccent));
                 }
             });
         } else {
@@ -147,7 +165,10 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
         if(location!=null){
             set(cali.cal(location.getLongitude(),location.getLatitude()).floatValue());
         }
-        else Toast.makeText(this,"请确认是否开启了GPS以及许可了程序获取位置数据的权限！",Toast.LENGTH_LONG).show();
+        else {
+            Toast.makeText(this,"请确认是否开启了GPS以及许可了程序获取位置数据的权限！",Toast.LENGTH_LONG).show();
+            mkimg.setImageResource(R.drawable.ic_alertred);
+        }
 
         sm = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
       //  m = sm.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
@@ -173,7 +194,7 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
                synchronized (MainActivity.class){
                    for(int n = 0;n < ov.length;n++){
                        ov[n] = sensorEvent.values[n];
-                       System.out.println("=======ov"+n+":"+ov[n]);
+                      // System.out.println("=======ov"+n+":"+ov[n]);
                    }
                  String north = getNorth();
                  tv.setText(north);
@@ -244,7 +265,7 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
         high_angle.setText(String.format("%.2f",Math.toDegrees(cali.C48))+"°");
       //  state.setTextColor(getResources().getColor(R.color.green));
       //  state.setText("当前为实时位置");
-        compass.getSensorValue().c(360.0f-azimuth);
+       // compass.getSensorValue().c(360.0f-azimuth);
         compass.getSensorValue().b(Float.valueOf(String.format("%.2f",azimuth)));
         compass.invalidate();
     }
@@ -257,6 +278,8 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
         //Double north = Math.toDegrees(ov[0]);
         float north = ov[0];
         if(north<0) north = north + 360;
+        compass.getSensorValue().c(360.0f-north);
+        compass.invalidate();
         return String.format("%.0f",north);
     }
 

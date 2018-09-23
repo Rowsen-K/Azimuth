@@ -3,6 +3,7 @@ package com.rowsen.myapplication;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -12,6 +13,9 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.Typeface;
 import android.os.Build;
+import android.text.Layout;
+import android.text.StaticLayout;
+import android.text.TextPaint;
 import android.util.Log;
 
 import java.util.Locale;
@@ -317,9 +321,9 @@ public class a {
     private void d(Canvas paramCanvas) {
         paramCanvas.save();
         if (this.l) {
-            paramCanvas.rotate(0.0F, this.x.x, this.x.y);
+            paramCanvas.rotate(j.c()+j.b(), this.x.x, this.x.y);
         } else {
-            paramCanvas.rotate(-this.j.c(), this.x.x, this.x.y);
+            paramCanvas.rotate(j.b(), this.x.x, this.x.y);
         }
         float f1 = this.x.x;
         float f3 = a(30.0F);
@@ -338,6 +342,7 @@ public class a {
         this.c.setStyle(Paint.Style.FILL);
         this.c.setColor(this.r);
         this.c.setShadowLayer(a(4.0F), 0.0F, 0.0F, -65536);
+        //绘制三角标
         paramCanvas.drawPath(this.i, this.c);
         this.i.reset();
         double d1 = (float) Math.toRadians(270.0D);
@@ -351,6 +356,7 @@ public class a {
         this.i.lineTo(f3 * f1 + this.x.x, f4 * f2 + this.x.y);
         this.c.setStyle(Paint.Style.STROKE);
         this.c.setStrokeWidth(a(9.0F));
+        //绘制红色指针标
         paramCanvas.drawPath(this.i, this.c);
         paramCanvas.restore();
     }
@@ -361,7 +367,7 @@ public class a {
         this.c.reset();
         this.c.setAntiAlias(true);
         this.c.setStrokeCap(Paint.Cap.ROUND);
-        this.g.setTextSize(a(80.0F));
+        this.g.setTextSize(a(100.0F));
         float f1;
         if (this.j.b() >= 360.0F) {
             f1 = this.j.b() % 360.0F;
@@ -372,16 +378,30 @@ public class a {
         }
         StringBuilder localObject = new StringBuilder();
         //  localObject.append(com.rowsen.myapplication.d.a(f1));
-        localObject.append(" ");
+       // localObject.append(" ");
         if (flag)
-        localObject.append(String.valueOf(f1));
-        else localObject.append("---");
-        localObject.append("°");
+        localObject.append("太阳方位"+String.valueOf(f1)+"°");
+        else localObject.append("---°");
         Rect localRect = new Rect();
         this.g.getTextBounds(localObject.toString(), 0, localObject.length(), localRect);
         float f3 = this.x.y;
         float f2 = localRect.height() / 2.0F;
-        paramCanvas.drawText(localObject.toString(), this.x.x - this.g.measureText(localObject.toString()) / 2.0F, f3 + f2, this.g);
+       if(!flag){
+           g.setColor(r);
+           paramCanvas.drawText(localObject.toString(), this.x.x - this.g.measureText(localObject.toString()) / 2.0F, f3 + f2, this.g);
+           g.setColor(o);
+       }
+       else{
+           TextPaint tp = new TextPaint();
+           tp.setColor(o);
+           tp.setStyle(Paint.Style.FILL);
+           tp.setTextSize(90);
+           StaticLayout myStaticLayout = new StaticLayout(localObject.toString(), tp, (int) (this.g.measureText(localObject.toString()) / 2.0F), Layout.Alignment.ALIGN_CENTER, 1.0f, 0.0f, false);
+           paramCanvas.save();
+           paramCanvas.translate(this.x.x - this.g.measureText(localObject.toString())/4, f3-localRect.height());
+           myStaticLayout.draw(paramCanvas);
+           paramCanvas.restore();
+       }
     }
 
     //旋转绘制功能
@@ -476,11 +496,13 @@ public class a {
     public void a(boolean paramBoolean) {
         this.l = paramBoolean;
     }
-
     public void setNorth(float north) {
         this.north = north;
     }
     public void setFlag(boolean flag){
         this.flag = flag;
+    }
+    public boolean getRotationState(){
+        return l;
     }
 }

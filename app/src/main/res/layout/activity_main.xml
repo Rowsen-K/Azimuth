@@ -143,7 +143,7 @@
             android:weightSum="100.0">
 
             <Button
-                android:id="@+id/calibrate_textview"
+                android:id="@+id/hold"
                 android:layout_width="0.0dip"
                 android:layout_height="34.0dip"
                 android:layout_marginLeft="5dp"
@@ -152,7 +152,7 @@
                 android:gravity="center"
                 android:paddingTop="2.0dip"
                 android:paddingBottom="2.0dip"
-                android:text="待开发"
+                android:text="锁定"
                 android:textColor="@color/info_text"
                 android:textSize="18sp" />
 
@@ -545,7 +545,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="25.0dip"
-            android:src="@drawable/icon_location" />
+            />
 
         <TextView
             android:id="@+id/state"
@@ -554,6 +554,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:text="状态：当前未定位！"
+            android:singleLine="true"
             android:textColor="@color/colorAccent"/>
     </LinearLayout>
 </LinearLayout>

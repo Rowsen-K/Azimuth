@@ -110,4 +110,7 @@ public class CompassView
      public void setFlag(boolean flag){
         a.setFlag(flag);
      }
+    public boolean getRotationState(){
+        return a.getRotationState();
+    }
 }
