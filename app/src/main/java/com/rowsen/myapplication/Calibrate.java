@@ -1,6 +1,7 @@
 package com.rowsen.myapplication;
 
 import java.util.Calendar;
+import java.util.TimeZone;
 
 public class Calibrate {
     Double B24;
@@ -38,6 +39,7 @@ public class Calibrate {
     // Double longitute;//Double B;Double B24;Double B24;Double B24;Double B24;
     Double cal(Double longitute, Double latitute) {
         Calendar c = Calendar.getInstance();
+        c.setTimeZone(TimeZone.getTimeZone("GMT"));
         Double Y = Double.valueOf(c.get(Calendar.YEAR));
         Double M = Double.valueOf(c.get(Calendar.MONTH) + 1);
         Double D = Double.valueOf(c.get(Calendar.DAY_OF_MONTH));

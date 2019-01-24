@@ -520,6 +520,7 @@
                             android:layout_weight="1"
                             android:format12Hour="yyyy年MM月dd日 HH:mm:ss"
                             android:format24Hour="yyyy年MM月dd日 HH:mm:ss"
+                            android:timeZone="GMT"
                             android:gravity="center"
                             android:textSize="22sp" />
                     </LinearLayout>

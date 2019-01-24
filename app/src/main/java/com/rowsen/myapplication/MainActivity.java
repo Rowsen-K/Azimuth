@@ -1,6 +1,7 @@
 package com.rowsen.myapplication;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
     float[] mv;
     float[] av;
     float[] ov;
+    AlertDialog ad;
     SensorEventListener myListener;
     @RequiresApi(api = Build.VERSION_CODES.O)
     @SuppressLint("WrongCall")
@@ -87,8 +89,12 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
         about.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,AboutActivity.class);
-                startActivity(intent);
+               // Intent intent = new Intent(MainActivity.this,AboutActivity.class);
+              //  startActivity(intent);
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setView(R.layout.wx_qrcode_dialog_layout);
+                ad = builder.create();
+                ad.show();
             }
         });
         hold = findViewById(R.id.hold);
