@@ -9,7 +9,6 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Canvas;
 import android.hardware.Sensor;
@@ -25,13 +24,10 @@ import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements SizeNotiRelativeLayout.a{
 
@@ -65,6 +61,8 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
     float[] mv;
     float[] av;
     float[] ov;
+    String latitude;
+    String longtitude;
     AlertDialog ad;
     SensorEventListener myListener;
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -93,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
               //  startActivity(intent);
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setView(R.layout.wx_qrcode_dialog_layout);
+                builder.setCancelable(false);
                 ad = builder.create();
                 ad.show();
             }
@@ -264,7 +263,13 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
 
     void set(float azimuth){
         mk.setVisibility(View.GONE);
-        pos.setText("纬度："+changeDegree(location.getLatitude())+"\n经度："+changeDegree(location.getLongitude()));
+        if(location.getLatitude()>0)
+            latitude = changeDegree(location.getLatitude())+"N";
+        else latitude = changeDegree(Math.abs(location.getLatitude()))+"S";
+        if(location.getLongitude()>0)
+            longtitude = changeDegree(location.getLongitude())+"E";
+        else longtitude = changeDegree(Math.abs(location.getLongitude()))+"W";
+        pos.setText("纬度："+latitude+"\n经度："+longtitude);
         //tv.setText(String.format("%.2f",azimuth));
         cw.setText(String.format("%.2f",Math.toDegrees(cali.C41))+"°");
         time_angle.setText(String.format("%.2f",Math.toDegrees(cali.C46))+"°");
@@ -289,4 +294,7 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
         return String.format("%.0f",north);
     }
 
+    public void close(View view) {
+        ad.dismiss();
+    }
 }
