@@ -64,6 +64,7 @@ public class a {
 
     float north;
     boolean flag = false;
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     public a(Context paramContext) {
         this.t = paramContext;
@@ -160,7 +161,7 @@ public class a {
         this.d.setStrokeWidth(a(25.0F));
         this.d.setStyle(Paint.Style.STROKE);
         this.d.setStrokeCap(Paint.Cap.ROUND);
-        this.m = ContextCompat.getColor(this.t,R.color.a);   //数字圈的颜色
+        this.m = ContextCompat.getColor(this.t, R.color.a);   //数字圈的颜色
         this.n = ContextCompat.getColor(this.t, R.color.b);  //主表盘的颜色,中心圈和外圈
         this.o = ContextCompat.getColor(this.t, R.color.white);   //磁单位\东西南文字\360等度数数字及中心显示实时数据文字的颜色
         this.p = ContextCompat.getColor(this.t, R.color.e);   //magfield\东北等三个偏角方向文字及外圈描边的颜色
@@ -223,7 +224,8 @@ public class a {
         }  */
         //可以在此处绘制一个外圈标记。预计加入磁北的标记
         this.c.setColor(this.r);
-        localPath.addArc((RectF) localObject, 270.0f-north - 1.5f, 3f);
+        // localPath.addArc((RectF) localObject, 270.0f - north - 1.5f, 3f);
+        localPath.addArc((RectF) localObject, north - 91.5f, 3f);
         paramCanvas.drawPath(this.i, this.c);
         this.c.setColor(this.s);
     }
@@ -307,9 +309,9 @@ public class a {
         // paramCanvas.drawPath(this.G, this.F);
         //  paramCanvas.drawPath(this.H, this.d);
         this.h.setColor(this.s);
-      //  a(paramCanvas, 270.0f-north, String.format(Locale.US, "Rowsen", new Object[]{Integer.valueOf((int) this.j.a())}), 445.0F, this.h);
-        a(paramCanvas, 270.0f-north, "Rowsen",  445.0F, this.h);
-        this.h.setColor(this.o);
+        //  a(paramCanvas, 270.0f-north, String.format(Locale.US, "Rowsen", new Object[]{Integer.valueOf((int) this.j.a())}), 445.0F, this.h);
+        a(paramCanvas, north - 90.0f, "Rowsen", 445.0F, this.h);
+        //this.h.setColor(this.o);
         this.f.setColor(this.o);
         this.h.setColor(this.o);
         this.f.setColor(this.o);
@@ -321,7 +323,7 @@ public class a {
     private void d(Canvas paramCanvas) {
         paramCanvas.save();
         if (this.l) {
-            paramCanvas.rotate(j.c()+j.b(), this.x.x, this.x.y);
+            paramCanvas.rotate(j.c() + j.b(), this.x.x, this.x.y);
         } else {
             paramCanvas.rotate(j.b(), this.x.x, this.x.y);
         }
@@ -378,30 +380,29 @@ public class a {
         }
         StringBuilder localObject = new StringBuilder();
         //  localObject.append(com.rowsen.myapplication.d.a(f1));
-       // localObject.append(" ");
+        // localObject.append(" ");
         if (flag)
-        localObject.append("太阳方位"+String.valueOf(f1)+"°");
+            localObject.append("太阳方位" + String.valueOf(f1) + "°");
         else localObject.append("---°");
         Rect localRect = new Rect();
         this.g.getTextBounds(localObject.toString(), 0, localObject.length(), localRect);
         float f3 = this.x.y;
         float f2 = localRect.height() / 2.0F;
-       if(!flag){
-           g.setColor(r);
-           paramCanvas.drawText(localObject.toString(), this.x.x - this.g.measureText(localObject.toString()) / 2.0F, f3 + f2, this.g);
-           g.setColor(o);
-       }
-       else{
-           TextPaint tp = new TextPaint();
-           tp.setColor(o);
-           tp.setStyle(Paint.Style.FILL);
-           tp.setTextSize(90);
-           StaticLayout myStaticLayout = new StaticLayout(localObject.toString(), tp, (int) (this.g.measureText(localObject.toString()) / 2.0F), Layout.Alignment.ALIGN_CENTER, 1.0f, 0.0f, false);
-           paramCanvas.save();
-           paramCanvas.translate(this.x.x - this.g.measureText(localObject.toString())/4, f3-localRect.height());
-           myStaticLayout.draw(paramCanvas);
-           paramCanvas.restore();
-       }
+        if (!flag) {
+            g.setColor(r);
+            paramCanvas.drawText(localObject.toString(), this.x.x - this.g.measureText(localObject.toString()) / 2.0F, f3 + f2, this.g);
+            g.setColor(o);
+        } else {
+            TextPaint tp = new TextPaint();
+            tp.setColor(r);
+            tp.setStyle(Paint.Style.FILL);
+            tp.setTextSize(90);
+            StaticLayout myStaticLayout = new StaticLayout(localObject.toString(), tp, (int) (this.g.measureText(localObject.toString()) / 2.0F), Layout.Alignment.ALIGN_CENTER, 1.0f, 0.0f, false);
+            paramCanvas.save();
+            paramCanvas.translate(this.x.x - this.g.measureText(localObject.toString()) / 4, f3 - localRect.height());
+            myStaticLayout.draw(paramCanvas);
+            paramCanvas.restore();
+        }
     }
 
     //旋转绘制功能
@@ -496,13 +497,16 @@ public class a {
     public void a(boolean paramBoolean) {
         this.l = paramBoolean;
     }
+
     public void setNorth(float north) {
         this.north = north;
     }
-    public void setFlag(boolean flag){
+
+    public void setFlag(boolean flag) {
         this.flag = flag;
     }
-    public boolean getRotationState(){
+
+    public boolean getRotationState() {
         return l;
     }
 }

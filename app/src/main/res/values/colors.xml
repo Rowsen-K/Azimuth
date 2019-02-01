@@ -22,4 +22,7 @@
     <color name="compass">#303030</color>
     <color name="info">#4A4A4A</color>
     <color name="state">#212021</color>
+    <color name="material_green">#ff4caf50</color>
+    <color name="green2">#ff65c23d</color>
+    <color name="bg_pay">#ff00c3b4</color>
 </resources>

@@ -46,8 +46,7 @@
                 android:id="@+id/clickImage"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_centerInParent="true"
-                />
+                android:layout_centerInParent="true" />
 
             <RelativeLayout
                 android:id="@+id/rl_crossline"
@@ -74,21 +73,75 @@
                     android:id="@+id/arraw_down"
                     android:layout_width="20.0dip"
                     android:layout_height="20.0dip"
-                    android:layout_centerHorizontal="true"
-                    />
+                    android:layout_centerHorizontal="true" />
             </RelativeLayout>
         </RelativeLayout>
 
-        <ImageButton
-            android:id="@+id/menuCameraMap"
+        <!--
+                <ImageButton
+                    android:id="@+id/menuCameraMap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="15.0dip"
+                    android:layout_marginRight="10.0dip"
+                    android:background="@null"
+                    android:visibility="visible" />
+        -->
+        <TextView
+            android:id="@+id/note"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="9.0dp"
+            android:layout_marginTop="6.0dp"
+            android:text="红色:太阳方位"
+            android:textColor="@color/colorAccent"
+            android:visibility="visible" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/note"
+            android:layout_marginLeft="9.0dp"
+            android:text="绿色:磁北"
+            android:textColor="@color/green"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/sog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="15.0dip"
-            android:layout_marginRight="10.0dip"
-            android:background="@null"
-            android:visibility="gone" />
+            android:layout_marginTop="6.0dp"
+            android:layout_marginRight="7dp"
+            android:text="SOG:---"
+            android:textColor="@color/info_title_white" />
+
+        <TextView
+            android:id="@+id/cog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/sog"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="7.0dp"
+            android:text="COG:---"
+            android:textColor="@color/info_title_white"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/mag_dif"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cog"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="7.0dp"
+            android:text="磁差:---"
+            android:textColor="@color/info_title_white"
+            />
 
         <ImageButton
             android:id="@+id/mapButton"
@@ -171,7 +224,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="磁北"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@color/green"
                     android:textSize="18sp" />
 
                 <LinearLayout
@@ -188,7 +241,7 @@
                         android:includeFontPadding="false"
                         android:singleLine="true"
                         android:text="0°"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="@color/green"
                         android:textSize="20sp" />
 
                     <TextView
@@ -200,7 +253,7 @@
                         android:includeFontPadding="false"
                         android:singleLine="true"
                         android:text="°"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="@color/green"
                         android:textSize="20sp" />
                 </LinearLayout>
             </LinearLayout>
@@ -520,9 +573,9 @@
                             android:layout_weight="1"
                             android:format12Hour="yyyy年MM月dd日 HH:mm:ss"
                             android:format24Hour="yyyy年MM月dd日 HH:mm:ss"
-                            android:timeZone="GMT"
                             android:gravity="center"
-                            android:textSize="22sp" />
+                            android:textSize="22sp"
+                            android:timeZone="GMT" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -543,19 +596,22 @@
 
         <ImageView
             android:id="@+id/mark"
-            android:layout_width="wrap_content"
+            android:layout_width="30dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="25.0dip"
-            />
+            android:layout_marginLeft="30.0dp" />
 
         <TextView
             android:id="@+id/state"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center"
-            android:text="状态：当前未定位！"
             android:singleLine="true"
-            android:textColor="@color/colorAccent"/>
+            android:text="状态：当前未定位！"
+            android:textColor="@color/colorAccent" />
+
+        <LinearLayout
+            android:layout_width="5dp"
+            android:layout_height="match_parent"></LinearLayout>
     </LinearLayout>
 </LinearLayout>
