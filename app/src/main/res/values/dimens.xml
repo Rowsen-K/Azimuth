@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="info_addr_value">16.0dip</dimen>
-    <dimen name="info_latitude_value">17.0dip</dimen>
+    <dimen name="info_addr_value">16.0sp</dimen>
+    <dimen name="info_latitude_value">17.0sp</dimen>
     <dimen name="info_text">12.0dip</dimen>
-    <dimen name="info_title">14.0dip</dimen>
-    <dimen name="info_value">18.0dip</dimen>
+    <dimen name="info_title">14.0sp</dimen>
+    <dimen name="info_value">18.0sp</dimen>
 </resources>

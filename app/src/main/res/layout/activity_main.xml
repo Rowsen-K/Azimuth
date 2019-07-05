@@ -90,7 +90,7 @@
                     android:visibility="visible" />
         -->
         <TextView
-            android:id="@+id/note"
+            android:id="@+id/note1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -102,12 +102,21 @@
             android:visibility="visible" />
 
         <TextView
+        android:id="@+id/note2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/note1"
+        android:layout_marginLeft="9.0dp"
+        android:text="绿色:磁方位"
+        android:textColor="@color/green"
+        android:visibility="visible" />
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/note"
+            android:layout_below="@id/note2"
             android:layout_marginLeft="9.0dp"
-            android:text="绿色:磁北"
-            android:textColor="@color/green"
+            android:text="磁北"
+            android:textColor="@color/c"
             android:visibility="visible" />
 
         <TextView
@@ -223,7 +232,7 @@
                     android:id="@+id/azimuth_type_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="磁北"
+                    android:text="磁方位"
                     android:textColor="@color/green"
                     android:textSize="18sp" />
 
@@ -283,7 +292,7 @@
             <View
                 android:id="@+id/info_line1"
                 android:layout_width="fill_parent"
-                android:layout_height="1.0px"
+                android:layout_height="1.0dp"
                 android:background="@color/info_line" />
 
             <LinearLayout
@@ -294,7 +303,7 @@
 
                 <View
                     android:id="@+id/info_line2"
-                    android:layout_width="1.0px"
+                    android:layout_width="1.0dp"
                     android:layout_height="fill_parent"
                     android:background="@color/info_line" />
 
@@ -362,7 +371,7 @@
 
                     <View
                         android:id="@+id/info_line3"
-                        android:layout_width="1.0px"
+                        android:layout_width="1.0dp"
                         android:layout_height="fill_parent"
                         android:background="@color/info_line" />
 
@@ -400,7 +409,7 @@
             <View
                 android:id="@+id/info_line4"
                 android:layout_width="fill_parent"
-                android:layout_height="1.0px"
+                android:layout_height="1.0dp"
                 android:background="@color/info_line" />
 
             <LinearLayout
@@ -412,7 +421,7 @@
 
                 <View
                     android:id="@+id/info_line5"
-                    android:layout_width="1.0px"
+                    android:layout_width="1.0dp"
                     android:layout_height="fill_parent"
                     android:background="@color/info_line" />
 
@@ -464,7 +473,7 @@
 
                 <View
                     android:id="@+id/info_line6"
-                    android:layout_width="1.0px"
+                    android:layout_width="1.0dp"
                     android:layout_height="fill_parent"
                     android:background="@color/info_line" />
 
@@ -515,7 +524,7 @@
             <View
                 android:id="@+id/info_line7"
                 android:layout_width="fill_parent"
-                android:layout_height="1.0px"
+                android:layout_height="1.0dp"
                 android:background="@color/info_line" />
 
             <LinearLayout
@@ -526,7 +535,7 @@
 
                 <View
                     android:id="@+id/info_line8"
-                    android:layout_width="1.0px"
+                    android:layout_width="1.0dp"
                     android:layout_height="fill_parent"
                     android:background="@color/info_line" />
 
@@ -583,7 +592,7 @@
             <View
                 android:id="@+id/info_line9"
                 android:layout_width="fill_parent"
-                android:layout_height="1.0px"
+                android:layout_height="1.0dp"
                 android:background="@color/info_line" />
         </LinearLayout>
     </LinearLayout>

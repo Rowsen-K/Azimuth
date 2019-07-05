@@ -206,7 +206,7 @@ public class a {
         this.c.setStyle(Paint.Style.STROKE);
         this.c.setAntiAlias(true);
         this.c.setStrokeWidth(a(10.0F));
-        f1 = a(430.0F);
+        /*f1 = a(430.0F);
         localObject = new RectF(this.x.x - f1, this.x.y - f1, this.x.x + f1, this.x.y + f1);
         f2 = this.j.c();
         if (f2 < -180.0F) {
@@ -216,18 +216,18 @@ public class a {
             if (f2 > 180.0F) {
                 f1 = f2 - 360.0F;
             }
-        }
+        }*/
         this.i.reset();
-        Path localPath = this.i;
-     /*   if (!this.l) {
+        /*Path localPath = this.i;
+     *//*   if (!this.l) {
             f1 = -f1;
-        }  */
+        }  *//*
         //可以在此处绘制一个外圈标记。预计加入磁北的标记
         this.c.setColor(this.r);
         // localPath.addArc((RectF) localObject, 270.0f - north - 1.5f, 3f);
         localPath.addArc((RectF) localObject, north - 91.5f, 3f);
-        paramCanvas.drawPath(this.i, this.c);
-        this.c.setColor(this.s);
+        paramCanvas.drawPath(localPath, this.c);
+        this.c.setColor(this.s);*/
     }
 
     private void b(Canvas paramCanvas, float paramFloat1, String paramString, float paramFloat2, Paint paramPaint) {
@@ -310,7 +310,9 @@ public class a {
         //  paramCanvas.drawPath(this.H, this.d);
         this.h.setColor(this.s);
         //  a(paramCanvas, 270.0f-north, String.format(Locale.US, "Rowsen", new Object[]{Integer.valueOf((int) this.j.a())}), 445.0F, this.h);
-        a(paramCanvas, north - 90.0f, "Rowsen", 445.0F, this.h);
+        if(getRotationState())
+            a(paramCanvas,  - 90.0f, "Rowsen", 445.0F, this.h);
+        else a(paramCanvas, north - 90.0f, "Rowsen", 445.0F, this.h);
         //this.h.setColor(this.o);
         this.f.setColor(this.o);
         this.h.setColor(this.o);
@@ -342,7 +344,8 @@ public class a {
         this.i.lineTo(f1, f4);
         this.i.lineTo(f5, f3);
         this.c.setStyle(Paint.Style.FILL);
-        this.c.setColor(this.r);
+        //this.c.setColor(this.r);
+        c.setColor(this.q);
         this.c.setShadowLayer(a(4.0F), 0.0F, 0.0F, -65536);
         //绘制三角标
         paramCanvas.drawPath(this.i, this.c);
@@ -361,6 +364,7 @@ public class a {
         //绘制红色指针标
         paramCanvas.drawPath(this.i, this.c);
         paramCanvas.restore();
+        c.setColor(this.r);
     }
 
 
@@ -382,7 +386,7 @@ public class a {
         //  localObject.append(com.rowsen.myapplication.d.a(f1));
         // localObject.append(" ");
         if (flag)
-            localObject.append("太阳方位" + String.valueOf(f1) + "°");
+            localObject.append("太阳方位" + f1 + "°");
         else localObject.append("---°");
         Rect localRect = new Rect();
         this.g.getTextBounds(localObject.toString(), 0, localObject.length(), localRect);
@@ -402,6 +406,18 @@ public class a {
             paramCanvas.translate(this.x.x - this.g.measureText(localObject.toString()) / 4, f3 - localRect.height());
             myStaticLayout.draw(paramCanvas);
             paramCanvas.restore();
+
+            Path localPath = this.i;
+     /*   if (!this.l) {
+            f1 = -f1;
+        }  */
+            //可以在此处绘制一个外圈标记。预计加入磁北的标记
+            this.c.setColor(this.r);
+            float k1 = a(430.0F);
+            // localPath.addArc((RectF) localObject, 270.0f - north - 1.5f, 3f);
+            localPath.addArc(new RectF(this.x.x - k1, this.x.y - k1, this.x.x + k1, this.x.y + k1), f1 - 91.5f, 3f);
+            paramCanvas.drawPath(localPath, this.c);
+            this.c.setColor(this.s);
         }
     }
 

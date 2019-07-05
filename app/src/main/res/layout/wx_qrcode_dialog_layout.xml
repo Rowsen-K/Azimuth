@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="15dp"
-            android:text="请关注微信获取激活码"
+            android:text="请关注微信反馈BUG"
             android:textColor="@color/focus_text_color"
             android:textSize="15sp" />
     </LinearLayout>

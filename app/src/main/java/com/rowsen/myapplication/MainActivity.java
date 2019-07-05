@@ -1,11 +1,5 @@
 package com.rowsen.myapplication;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -19,8 +13,6 @@ import android.location.GpsStatus;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.location.OnNmeaMessageListener;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -32,13 +24,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import net.sf.marineapi.nmea.parser.DataNotAvailableException;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import net.sf.marineapi.nmea.parser.SentenceFactory;
-import net.sf.marineapi.nmea.parser.SentenceParser;
-import net.sf.marineapi.nmea.sentence.GGASentence;
 import net.sf.marineapi.nmea.sentence.RMCSentence;
-import net.sf.marineapi.nmea.sentence.Sentence;
-import net.sf.marineapi.nmea.sentence.TalkerId;
 
 public class MainActivity extends AppCompatActivity implements SizeNotiRelativeLayout.a {
 
@@ -84,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
     TextView cog;
     TextView sog;
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+
     @SuppressLint("WrongCall")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -306,8 +298,7 @@ public class MainActivity extends AppCompatActivity implements SizeNotiRelativeL
         double du = Math.floor(l);
         double fen = (l - du) * 60;
         //double miao = Math.floor(((l-du)*60-fen)*60);
-        String temp = (int) du + "°" + String.format("%.3f", fen) + "′";
-        return temp;
+        return (int) du + "°" + String.format("%.3f", fen) + "′";
     }//位置数据小数化度分秒
 
     void set(float azimuth) {
